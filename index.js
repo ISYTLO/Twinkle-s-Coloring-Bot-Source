@@ -6,7 +6,21 @@
     Its purpose is to provide an interactive color role system and additional server features to enhance the overall member experience.
 
     And I guess it will be open source
+
+
+
+
+
+
+
+    { this is for me don't mind it
+    git add .
+    git commit -m " "
+    git push
+    }
 */
+
+
 
 require("dotenv").config();
 console.log("TOKEN RAW =", JSON.stringify(process.env.TOKEN));
