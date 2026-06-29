@@ -1,4 +1,19 @@
+/*
+    This script made by ISYTLO at 2026,Jun,29 
+    Finished at 6:08AM
+   This bot was primarily developed for the Discord server Twinkle, owned by Kii (k7lani).
+
+    Its purpose is to provide an interactive color role system and additional server features to enhance the overall member experience.
+
+    And I guess it will be open source
+*/
+
+require("dotenv").config();
+console.log("TOKEN RAW =", JSON.stringify(process.env.TOKEN));
+console.log("TOKEN LENGTH:", process.env.TOKEN?.length);
+console.log("TOKEN START:", process.env.TOKEN?.slice(0, 10));
 const fs = require("fs");
+const { Events } = require("discord.js");
 
 const {
     Client,
@@ -18,7 +33,6 @@ const client = new Client({
     ]
 });
 
-require("dotenv").config();
 const guild = client.guilds.cache.get("SERVER_ID");
 const colorChannelId = "1520198376795410496"
 
@@ -292,7 +306,7 @@ async function syncColorRoles(guild) {
     console.log("Color roles fully synced.");
 }
 
-client.once("ready", async () => {
+client.once(Events.ClientReady, async () => {
     console.log(`Logged in as ${client.user.tag}`);
 
     const guild = client.guilds.cache.first();
