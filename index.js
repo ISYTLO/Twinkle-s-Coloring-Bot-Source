@@ -519,8 +519,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const saved = await getColorFromData(interaction.customId);
 
     if (saved) {
-        const role = interaction.guild.roles.cache.get(saved.id);
-        if (role) await interaction.member.roles.add(role);
+       const role = interaction.guild.roles.cache.get(saved.id);
+
+       console.log("Role:", role?.name);
+        console.log("Role ID:", saved.id);
+
+       if (!role) {
+            console.log("Role not found.");
+           return;
+       }
+
+       await interaction.member.roles.add(role);
+       console.log("Added role.");
     }
 
     const msg = await interaction.channel.send({
