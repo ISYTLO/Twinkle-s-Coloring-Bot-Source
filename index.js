@@ -237,7 +237,6 @@ async function recreateColors(guild) {
 
         let role = guild.roles.cache.find(r => r.name === color.name);
 
-        // delete old role if exists (optional)
         if (role) {
             try {
                 await role.delete("Recreating color system");
@@ -246,7 +245,6 @@ async function recreateColors(guild) {
             }
         }
 
-        // create new role
         role = await guild.roles.create({
             name: color.name,
             color: color.color,
@@ -255,7 +253,6 @@ async function recreateColors(guild) {
 
         console.log(`Recreated ${color.name}`);
 
-        // ALWAYS overwrite JSON
         data[key] = {
             id: role.id
         };
@@ -463,10 +460,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const color = colors[interaction.customId];
     if (!color) return;
 
-    // instantly acknowledge interaction (prevents Unknown interaction)
     await interaction.deferUpdate();
 
-    // disable buttons immediately
     const disabledRows = interaction.message.components.map(row =>
         new ActionRowBuilder().addComponents(
             row.components.map(button =>
@@ -479,7 +474,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
         components: disabledRows
     });
 
-    // role logic
     for (const key in colors) {
         const saved = await getColorFromData(key);
         if (!saved) continue;
@@ -498,19 +492,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
         if (role) await interaction.member.roles.add(role);
     }
 
-    // send confirmation message
     const msg = await interaction.channel.send({
         content: `${interaction.user} changed color to ${color.label}`
     });
 
-    // wait
     setTimeout(async () => {
 
-        // delete BOTH messages
         await msg.delete().catch(() => {});
         await interaction.message.delete().catch(() => {});
 
-        // re-send fresh menu
         await sendColorMenu(interaction.channel);
 
     }, 5000);
