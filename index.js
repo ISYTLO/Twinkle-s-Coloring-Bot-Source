@@ -18,16 +18,17 @@
     git commit -m " "
     git push
     }
+    node index.js
 */
 
 
-
 require("dotenv").config();
+
 console.log("TOKEN RAW =", JSON.stringify(process.env.TOKEN));
 console.log("TOKEN LENGTH:", process.env.TOKEN?.length);
 console.log("TOKEN START:", process.env.TOKEN?.slice(0, 10));
+
 const fs = require("fs");
-const { Events } = require("discord.js");
 
 const {
     Client,
@@ -37,6 +38,7 @@ const {
     ButtonBuilder,
     ButtonStyle
 } = require("discord.js");
+
 const { channel } = require("diagnostics_channel");
 
 const client = new Client({
@@ -460,7 +462,7 @@ client.on("messageCreate", async (message) => {
 
         case "ISYColors: createColors":
         case "ISYColors: CC":
-            await createColors(message.guild);
+            await recreateColors(message.guild);
             break;
 
         case "ISYColors: setRolesGray":
