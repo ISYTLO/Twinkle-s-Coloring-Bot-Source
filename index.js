@@ -259,7 +259,7 @@ async function setAllRolesToGrey(guild) {
     console.log("Failed roles:", failed);
 }
 
-async function recreateColors(guild) {
+async function recreateColors(guild, chan) {
     const data = {};
 
     for (const key in colors) {
@@ -282,6 +282,7 @@ async function recreateColors(guild) {
         });
 
         console.log(`Recreated ${color.name}`);
+        chan.send(`Recreated ${color.name}`);
 
         data[key] = {
             id: role.id
@@ -462,7 +463,7 @@ client.on("messageCreate", async (message) => {
 
         case "ISYColors: createColors":
         case "ISYColors: CC":
-            await recreateColors(message.guild);
+            await recreateColors(message.guild, message.channel);
             break;
 
         case "ISYColors: setRolesGray":
